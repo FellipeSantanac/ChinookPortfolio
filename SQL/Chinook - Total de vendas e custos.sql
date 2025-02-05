@@ -1,0 +1,45 @@
+
+
+USE Chinook
+
+--TOTAL DE VENDAS
+
+SELECT
+	FORMAT(SUM(UnitPrice), 'C0') AS 'TOTAL_VENDAS'
+FROM InvoiceLine
+
+
+--NUMERO TOTAL DE VENDAS
+
+SELECT
+	COUNT(Quantity) AS 'QTDE_VENDAS'
+FROM InvoiceLine
+
+
+--TOTAL DE CUSTO
+
+SELECT
+	FORMAT(SUM(Salary), 'C0') AS 'TOTAL_CUSTO'
+FROM Employee
+
+
+--CUSTO SALARIO E CARGOS
+
+SELECT
+	FirstName,
+	Title,
+	FORMAT(Salary, 'C0') AS 'SALARIO'
+FROM Employee
+ORDER BY SALARIO DESC
+
+
+--VENDAS POR PAIS
+
+SELECT
+	C.Country AS 'PAIS',
+	FORMAT(SUM(IV.UnitPrice), 'C0') AS 'TOTAL'
+FROM Customer C
+INNER JOIN Invoice I ON I.CustomerId = C.CustomerId
+INNER JOIN InvoiceLine IV ON IV.InvoiceId = I.InvoiceId
+GROUP BY C.Country
+ORDER BY PAIS ASC
